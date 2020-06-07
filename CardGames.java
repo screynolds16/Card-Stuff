@@ -5,6 +5,5 @@ public class CardGames{
     deck.shuffleDeck();
     deck.printDeck();
   }
-
 }
 
