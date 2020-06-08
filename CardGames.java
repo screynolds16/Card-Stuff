@@ -174,6 +174,19 @@ public class CardGames{
     average = average/turnCounts.size();
     System.out.println("Average turns: " + average);
   }
+
+  public void playGoFish(){
+  	CardDeck deck = new CardDeck();
+  	deck.shuffleDeck();
+  	int numPlayers = 4;
+  	ArrayList<PlayerDeck> playerHands = new ArrayList<PlayerDeck>();
+  	for(int i = 0; i < numPlayers; i++){
+  		playerHands.add(i, new PlayerDeck());
+  	}
+  	for(int i = 0; i < 5*numPlayers; i++){
+  		playerHands.get(i%numPlayers).
+  	}
+  }
 }
 
 //test 
