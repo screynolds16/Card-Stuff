@@ -38,4 +38,8 @@ public class CardDeck{
   public void shuffleDeck(){
     Collections.shuffle(deck);
   }
+
+  public void dealDeck(){
+    
+  }
 }
