@@ -4,6 +4,7 @@ public class CardGames{
     deck.printDeck();
     deck.shuffleDeck();
     deck.printDeck();
+    deck.printDeck();
   }
 
 }
