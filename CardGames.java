@@ -150,7 +150,7 @@ public class CardGames{
       }
 
       System.out.println("GG's" + gameOver);
-      if(turnCounts.size() == 9){
+      if(turnCounts.size() == 0){
         System.out.println("Suck my balls hori");
         funOver = true;
         turnCounts.add(turnCounter);
