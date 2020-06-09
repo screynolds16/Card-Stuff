@@ -2,10 +2,12 @@ import java.util.*;
 
 public class CardGames{
   public static void main(String[] args) {
-    playWar();
-
+    //playWar();
+    playGoFish();
   }
 
+  //simulated game of war between two players
+  //counts turns for each game and average turns over 10 games
   public static void playWar(){
     ArrayList<Integer> turnCounts = new ArrayList<Integer>();
     boolean funOver = false;
@@ -150,7 +152,7 @@ public class CardGames{
       }
 
       System.out.println("GG's" + gameOver);
-      if(turnCounts.size() == 0){
+      if(turnCounts.size() == 9){
         System.out.println("Suck my balls hori");
         funOver = true;
         turnCounts.add(turnCounter);
@@ -175,17 +177,109 @@ public class CardGames{
     System.out.println("Average turns: " + average);
   }
 
-  public void playGoFish(){
+  public static void playGoFish(){
   	CardDeck deck = new CardDeck();
   	deck.shuffleDeck();
   	int numPlayers = 4;
-  	ArrayList<PlayerDeck> playerHands = new ArrayList<PlayerDeck>();
+    ArrayList<Card> stolen = new ArrayList<Card>();
+
+  	ArrayList<PlayerDeckFish> playerHands = new ArrayList<PlayerDeckFish>();
+    ArrayList<JunkPile> playerPiles = new ArrayList<JunkPile>();
   	for(int i = 0; i < numPlayers; i++){
-  		playerHands.add(i, new PlayerDeck());
+  		playerHands.add(i, new PlayerDeckFish());
+      playerPiles.add(i, new JunkPile());
   	}
   	for(int i = 0; i < 5*numPlayers; i++){
-  		playerHands.get(i%numPlayers).
+  		playerHands.get(i%numPlayers).addCard(deck.dealCard());
   	}
+    //print out player hands at start
+    
+    
+    
+
+    int turnCounter = 0;
+    boolean gameOver = false;
+    boolean turnOver = false;
+    while(!gameOver){
+      turnOver = false;
+      while(!turnOver){
+
+        /*print hands*/
+        System.out.println("Player 0's hand :" );
+        playerHands.get(0).printDeck();
+        System.out.println("");
+        System.out.println("Player 1's hand :" );
+        playerHands.get(1).printDeck();
+        System.out.println(" ");
+        System.out.println("Player 2's hand :" );
+        playerHands.get(2).printDeck();
+        System.out.println("");
+        System.out.println("Player 3's hand :" );
+        playerHands.get(3).printDeck();
+        System.out.println("");
+        /*end print hands*/
+
+        System.out.println("Player " + turnCounter%numPlayers + ", which player would you like to ask?");
+        Scanner scan = new Scanner(System.in);
+        int drawFrom = scan.nextInt();
+        System.out.println("Player " + turnCounter%numPlayers + ", which card would you like to ask for?");
+        int drawNum = scan.nextInt();
+
+        stolen = playerHands.get(drawFrom).stealThese(drawNum);
+        if(stolen.size() < 1){
+          System.out.println("GO FISH! you're being dealt another card from the deck");
+          playerHands.get(turnCounter%numPlayers).addCard(deck.dealCard());
+          turnOver = true;
+        }
+        else{
+          System.out.println("You stole " + stolen.size() + " cards from player " + drawFrom);
+          for(int i = 0; i < stolen.size(); i++){
+            playerHands.get(turnCounter%numPlayers).addCard(stolen.get(i));
+          }
+        }
+        stolen.clear();
+       
+      }
+
+      
+
+      int check = 0;
+      int instances = 0;
+      PlayerDeckFish thisPlayer = playerHands.get(turnCounter%numPlayers);
+      for(int i = 0; i < thisPlayer.getSize() - 3; i++){
+        check = thisPlayer.getCardAt(i).getValue();
+        instances = 1;
+        for(int j = i+1; j < thisPlayer.getSize(); j++){
+          if(thisPlayer.getCardAt(j).getValue() == check){
+            instances++;
+          }
+          if(instances == 4){
+            System.out.println("Adding the " + check + " cards to player " + turnCounter%numPlayers + "'s pile");
+            stolen = thisPlayer.stealThese(check);
+            for(int x = 0; x < stolen.size(); x++){
+              playerPiles.get(turnCounter%numPlayers).addCard(stolen.get(x));
+            }
+          }
+        }
+      }
+
+      /*print hands*/
+      System.out.println("Player 0's hand :" );
+      playerHands.get(0).printDeck();
+      System.out.println("");
+      System.out.println("Player 1's hand :" );
+      playerHands.get(1).printDeck();
+      System.out.println(" ");
+      System.out.println("Player 2's hand :" );
+      playerHands.get(2).printDeck();
+      System.out.println("");
+      System.out.println("Player 3's hand :" );
+      playerHands.get(3).printDeck();
+      System.out.println("");
+      /*end print hands*/
+
+      turnCounter++;
+    }
   }
 }
 
