@@ -153,7 +153,7 @@ public class CardGames{
 
       System.out.println("GG's" + gameOver);
       if(turnCounts.size() == 9){
-        System.out.println("Suck my balls hori");
+        System.out.println("Fun's over");
         funOver = true;
         turnCounts.add(turnCounter);
       }
@@ -177,6 +177,7 @@ public class CardGames{
     System.out.println("Average turns: " + average);
   }
 
+  /*GoFish before i learned some of the more important rules to play go fish*/
   public static void playGoFish(){
   	CardDeck deck = new CardDeck();
   	deck.shuffleDeck();
